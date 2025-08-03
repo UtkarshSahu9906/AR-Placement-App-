@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">AR-Placement-App</string>
+    <string name="app_name">AR Drill Placement</string>
+
+    <string-array name="drill_options">
+        <item>Drill 1: Basic Cone</item>
+        <item>Drill 2: Red Cube</item>
+        <item>Drill 3: Blue Pyramid</item>
+    </string-array>
+
+    <string name="select_drill">Select Drill:</string>
+    <string name="start_ar">Start AR Drill</string>
+    <string name="tap_to_place">Tap on the ground to place your drill</string>
 </resources>
