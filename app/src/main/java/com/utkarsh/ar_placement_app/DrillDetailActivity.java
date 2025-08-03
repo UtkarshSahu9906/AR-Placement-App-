@@ -1,4 +1,11 @@
 package com.utkarsh.ar_placement_app;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 public class DrillDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -12,7 +19,7 @@ public class DrillDetailActivity extends AppCompatActivity {
         // Add your implementation here
 
         startARButton.setOnClickListener(v -> {
-            Intent intent = new Intent(DrillDetailActivity.this, ARPlacementActivity.class);
+            Intent intent = new Intent(DrillDetailActivity.this, ARActivity.class);
             intent.putExtra("selected_drill", drillName);
             startActivity(intent);
         });

@@ -2,9 +2,5 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <string-array name="drill_options">
-        <item>Drill 1: Basic Cone</item>
-        <item>Drill 2: Red Cube</item>
-        <item>Drill 3: Blue Pyramid</item>
-    </string-array>
+
 </resources>
