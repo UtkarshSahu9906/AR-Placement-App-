@@ -1,7 +1,5 @@
 # AR Drill Placement App
 
-![App Banner](screenShorts/ss1.png)
-
 An Android AR application that lets users select and place virtual drill markers in augmented reality space.
 
 ## Features
@@ -12,15 +10,14 @@ An Android AR application that lets users select and place virtual drill markers
 
 ## Screenshots
 <div align="center">
-  <img src="screenShorts/ss1.png" width="30%"/>
-  <img src="screenShorts/ss2.png" width="30%" /> 
-  <img src="screenShorts/ss3.png" width="30%" />
+  <img src="screenShorts/ss1.jpeg" width="30%"/>
+  <img src="screenShorts/ss2.jpeg" width="30%" /> 
+  <img src="screenShorts/ss3.jpeg" width="30%" />
 </div>
 
 ## APK Download
 Get the latest version:
-- [Download APK](app/release/app-release.apk) (Direct)
-- [Releases Page](https://github.com/yourusername/ar-drill-app/releases) (All versions)
+- [Download APK](app/release/app-debug.apk) (Direct)
 
 **Requirements:**
 - Android 7.0+
