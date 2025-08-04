@@ -1,26 +1,21 @@
 package com.utkarsh.ar_placement_app;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
-import android.os.Build;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.math.Vector3;
-import com.google.ar.sceneform.rendering.Color;
 import com.google.ar.sceneform.rendering.MaterialFactory;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.ShapeFactory;
+import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 
 public class ARActivity extends AppCompatActivity {
-    private Fragment arFragment;
+    private ArFragment arFragment;
     private ModelRenderable drillRenderable;
     private String selectedDrill;
 
@@ -30,50 +25,53 @@ public class ARActivity extends AppCompatActivity {
         setContentView(R.layout.activity_aractivity);
 
         selectedDrill = getIntent().getStringExtra("selected_drill");
-        arFragment = getSupportFragmentManager().findFragmentById(R.id.ar_fragment);
+        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ar_fragment);
 
         buildDrillModel();
-        setupTapListener();
     }
 
     private void buildDrillModel() {
-        MaterialFactory.makeOpaqueWithColor(this, new Color(android.graphics.Color.GRAY))
+        MaterialFactory.makeOpaqueWithColor(this, new com.google.ar.sceneform.rendering.Color(Color.GRAY))
                 .thenAccept(material -> {
-                    // Create different shapes based on drill selection
-                    if (selectedDrill.contains("Cone")) {
-                        drillRenderable = ShapeFactory.makeCube(
-                                new Vector3(0.1f, 0.2f, 0.1f),
+                    if (selectedDrill != null && selectedDrill.contains("Cone")) {
+                        drillRenderable = ShapeFactory.makeCylinder(
+                                0.05f, 0.2f,
                                 Vector3.zero(),
+
+
+
                                 material);
-                    } else if (selectedDrill.contains("Red")) {
-                        material.setFloat3("color", new Color(android.graphics.Color.RED));
+                    } else if (selectedDrill != null && selectedDrill.contains("Red")) {
+                        material.setFloat3("color", new com.google.ar.sceneform.rendering.Color(Color.RED));
                         drillRenderable = ShapeFactory.makeCube(
                                 new Vector3(0.15f, 0.15f, 0.15f),
                                 Vector3.zero(),
                                 material);
                     } else {
-                        material.setFloat3("color", new Color(android.graphics.Color.BLUE));
-                        drillRenderable = ShapeFactory.makeCube(
-                                new Vector3(0.15f, 0.15f, 0.15f),
-                                Vector3.zero(),
-                                material);
+                        material.setFloat3("color", new com.google.ar.sceneform.rendering.Color(Color.BLUE));
+                        drillRenderable = ShapeFactory.makeSphere(
+                                0.15f,                 // radius
+                                Vector3.zero(),       // center
+                                material              // material
+                        );
+
                     }
+                    setupTapListener();
                 });
     }
 
     private void setupTapListener() {
-//        arFragment.setEnterTransition((hitResult, plane, motionEvent) -> {
-//            if (drillRenderable == null) return;
-//
-//            // Create anchor
-////Anchor anchor = hitResult.createAnchor();
-////            anchorNode.setParent(arFragment.getArSceneView().getScene());
-//
-//            // Create and attach node
-//            TransformableNode node = new TransformableNode(arFragment.get());
-//            node.setParent(anchorNode);
-//            node.setRenderable(drillRenderable);
-//            node.select();
-//        });
+        arFragment.setOnTapArPlaneListener((hitResult, plane, motionEvent) -> {
+            if (drillRenderable == null) return;
+
+            Anchor anchor = hitResult.createAnchor();
+            AnchorNode anchorNode = new AnchorNode(anchor);
+            anchorNode.setParent(arFragment.getArSceneView().getScene());
+
+            TransformableNode node = new TransformableNode(arFragment.getTransformationSystem());
+            node.setParent(anchorNode);
+            node.setRenderable(drillRenderable);
+            node.select();
+        });
     }
 }
